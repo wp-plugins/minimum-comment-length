@@ -1,13 +1,13 @@
 <?php
 /*
 Plugin Name: Minimum Comment Length
-Version: 0.5
+Version: 0.6
 Plugin URI: http://yoast.com/wordpress/minimum-comment-length/
 Description: Check the comment for a set minimum length and disapprove it if it's too short.
 Author: Joost de Valk
 Author URI: http://yoast.com/
 
-Copyright 2008 Joost de Valk (email: joost@joostdevalk.nl)
+Copyright 2008 Joost de Valk (email: joost@yoast.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -32,7 +32,30 @@ if ( ! class_exists( 'MinComLength_Admin' ) ) {
 			global $wpdb;
 			if ( function_exists('add_submenu_page') ) {
 				add_options_page('Min Comment Length Configuration', 'Min Comment Length', 10, basename(__FILE__), array('MinComLength_Admin','config_page'));
+				add_filter( 'plugin_action_links', array( 'MinComLength_Admin', 'filter_plugin_actions'), 10, 2 );
+				add_filter( 'ozh_adminmenu_icon', array( 'MinComLength_Admin', 'add_ozh_adminmenu_icon' ) );								
 			}
+		}
+
+		function add_ozh_adminmenu_icon( $hook ) {
+			static $mclicon;
+			if (!$mclicon) {
+				$mclicon = WP_CONTENT_URL . '/plugins/' . plugin_basename(dirname(__FILE__)). '/comment_edit.png';
+			}
+			if ($hook == 'minimum-comment-length.php') return $mclicon;
+			return $hook;
+		}
+
+		function filter_plugin_actions( $links, $file ){
+			//Static so we don't call plugin_basename on every plugin row.
+			static $this_plugin;
+			if ( ! $this_plugin ) $this_plugin = plugin_basename(__FILE__);
+			
+			if ( $file == $this_plugin ){
+				$settings_link = '<a href="options-general.php?page=minimum-comment-length.php">' . __('Settings') . '</a>';
+				array_unshift( $links, $settings_link ); // before other links
+			}
+			return $links;
 		}
 		
 		function config_page() {
@@ -98,7 +121,10 @@ function check_comment_length($commentdata) {
 	if (!isset($options['mincomlengtherror']) || $options['mincomlengtherror'] == "")
 		$options['mincomlengtherror'] = "Error: Your comment is too short. Please try to say something useful.";
 	
-	if (strlen($commentdata['comment_content']) < $options['mincomlength']) {
+	if (current_user_can('edit_users')) {
+		return $commentdata;
+	}
+	if (strlen(trim($commentdata['comment_content'])) < $options['mincomlength']) {
 		wp_die( __($options['mincomlengtherror']) );
 	} else {
 		return $commentdata;

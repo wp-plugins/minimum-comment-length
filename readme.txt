@@ -3,14 +3,14 @@ Contributors: joostdevalk
 Donate link: http://yoast.com/donate/
 Tags: comments, spam
 Requires at least: 2.2
-Tested up to: 2.6
-stable tag: 0.5
+Tested up to: 2.7
+stable tag: 0.6
 
 Check the comment for a set minimum length and disapprove it if it's too short.
 
 == Description ==
 
-Don't you find it annoying when someone comments with just a smiley? Or a "thanks"? On quite a few forums you have to leave a comment with a minimum of 15 characters to be able to comment, but WordPress doesn't allow you to set such a threshold. With this plugin, it does. It easily checks the comment for a set minimum length and disapprove it if it's too short.
+Don't you find it annoying when someone comments with just a smiley? Or a "thanks"? On quite a few forums you have to leave a comment with a minimum of 15 characters to be able to comment, but WordPress doesn't allow you to set such a threshold. With this plugin, it does. It easily checks the comment for a set minimum length and disapprove it if it's too short (except if you're the admin).
 
 More info:
 

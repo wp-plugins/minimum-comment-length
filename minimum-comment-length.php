@@ -1,13 +1,15 @@
 <?php
 /*
 Plugin Name: Minimum Comment Length
-Version: 0.6
+Version: 1.0
 Plugin URI: http://yoast.com/wordpress/minimum-comment-length/
 Description: Check the comment for a set minimum length and disapprove it if it's too short.
 Author: Joost de Valk
 Author URI: http://yoast.com/
+License: GPL v3
 
-Copyright 2008 Joost de Valk (email: joost@yoast.com)
+Check the comment for a set minimum length and disapprove it if it's too short.
+Copyright (C) 2008-2011, Joost de Valk - joost@yoast.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,113 +26,190 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-if ( ! class_exists( 'MinComLength_Admin' ) ) {
+if ( ! class_exists( 'Minimum_Comment_Length' ) ) {
 
-	class MinComLength_Admin {
+	class Minimum_Comment_Length {
 		
+		var $hook 			= 'min-comment-length';
+		var $text_domain	= 'min_comment_length';
+		var $option_name	= 'min_comment_length_option';
+		var $options		= array();
+		var $absolute_min	= 5;
+		
+		/**
+		 * Constructor
+		 *
+		 * @since 1.0
+		 */
+		function __construct() {
+			// Retrieve the plugin options
+			$this->options = get_option( $this->option_name );
+			if ( ! is_array( $this->options ) )
+				$this->set_defaults();
+
+			// Process the comment and check it for length
+			add_filter( 'preprocess_comment', 	array( &$this, 'check_comment_length' ) );
+			
+			if ( !is_admin() )
+				return;
+			
+			// Hook into init for registration of the option and the language files
+			add_action(	'admin_init', 			array( &$this, 'init' ) );
+			
+			// Register the settings page	
+			add_action( 'admin_menu', 			array( &$this, 'add_config_page' ) );
+			
+			// Register a link to the settings page on the plugins overview page
+			add_filter( 'plugin_action_links', 	array( &$this, 'filter_plugin_actions' ), 10, 2 );
+		}
+		
+		/**
+		 * PHP 4 Compatible Constructor
+		 *
+		 * @since 1.0
+		 */
+		function Minimum_Comment_Length() {
+			$this->__construct();
+		}
+		
+		/**
+		 * Register the textdomain and the options array along with the validation function
+		 *
+		 * @since 1.0
+		 */
+		function init() {
+			// Allow for localization
+			load_plugin_textdomain( $this->text_domain, false, basename( dirname( __FILE__ ) ) . '/languages' );
+
+			// Register our option array
+			register_setting( $this->option_name, $this->option_name, array( &$this, 'options_validate' ) );
+		}
+		
+		/**
+		 * Validate the input, make sure comment length is an integer and above the minimum value.
+		 *
+		 * @since 1.0
+		 * @param array $input with unvalidated options.
+		 * @return array $input with validated options.
+		 */
+		function options_validate( $input ) {
+			$input['mincomlength'] = (int) $input['mincomlength'];
+			if ( ( $this->absolute_min + 1 ) > $input['mincomlength'] || empty( $input['mincomlength'] ) ) {
+				add_settings_error( $this->option_name, 'min_length_invalid', sprintf( __( 'The minimum length you entered is invalid, please enter a minimum length above %d.', $this->text_domain ), $this->absolute_min ) );
+				$input['mincomlength'] = 15;
+			}
+			return $input;
+		}
+		
+		/**
+		 * Register the config page for all users that have the manage_options capability
+		 *
+		 * @since 0.1
+		 */
 		function add_config_page() {
-			global $wpdb;
-			if ( function_exists('add_submenu_page') ) {
-				add_options_page('Min Comment Length Configuration', 'Min Comment Length', 10, basename(__FILE__), array('MinComLength_Admin','config_page'));
-				add_filter( 'plugin_action_links', array( 'MinComLength_Admin', 'filter_plugin_actions'), 10, 2 );
-				add_filter( 'ozh_adminmenu_icon', array( 'MinComLength_Admin', 'add_ozh_adminmenu_icon' ) );								
-			}
+			add_options_page( __( 'Min Comment Length Configuration', $this->text_domain ), __( 'Min Comment Length', $this->text_domain ), 'manage_options', $this->hook, array( &$this, 'config_page' ) );
 		}
 
-		function add_ozh_adminmenu_icon( $hook ) {
-			static $mclicon;
-			if (!$mclicon) {
-				$mclicon = WP_CONTENT_URL . '/plugins/' . plugin_basename(dirname(__FILE__)). '/comment_edit.png';
-			}
-			if ($hook == 'minimum-comment-length.php') return $mclicon;
-			return $hook;
-		}
-
+		/**
+		 * Register the settings link for the plugins page
+		 *
+		 * @since 0.1
+		 */
 		function filter_plugin_actions( $links, $file ){
 			//Static so we don't call plugin_basename on every plugin row.
 			static $this_plugin;
-			if ( ! $this_plugin ) $this_plugin = plugin_basename(__FILE__);
+			if ( ! $this_plugin ) $this_plugin = plugin_basename( __FILE__ );
 			
 			if ( $file == $this_plugin ){
-				$settings_link = '<a href="options-general.php?page=minimum-comment-length.php">' . __('Settings') . '</a>';
+				$settings_link = '<a href="options-general.php?page='.$this->hook.'">' . __( 'Settings', $this->text_domain ) . '</a>';
 				array_unshift( $links, $settings_link ); // before other links
 			}
 			return $links;
 		}
 		
-		function config_page() {
-			// Set some defaults if no settings are set yet
-			$options['mincomlength'] = 15;
-			$options['mincomlengtherror'] = "Error: Your comment is too short. Please try to say something useful.";
-			add_option('MinComLengthOptions', $options);
-			
-			// Overwrite defaults with saved settings
-			if ( isset($_POST['submit']) ) {
-				if (!current_user_can('manage_options')) die(__('You cannot edit the Minimum Comment Length options.'));
-				check_admin_referer('mincomlength-config');
-
-				if (isset($_POST['mincomlength']) && $_POST['mincomlength'] != "" && is_numeric($options['mincomlength'])) 
-					$options['mincomlength'] = $_POST['mincomlength'];
-
-				if (isset($_POST['mincomlengtherror']) && $_POST['mincomlengtherror'] != "") 
-					$options['mincomlengtherror'] = $_POST['mincomlengtherror'];
-
-				update_option('MinComLengthOptions', $options);
+		/**
+		 * Set default values for the plugin. If old, as in pre 1.0, settings are there, use them and then delete them.
+		 */
+		function set_defaults() {
+			// Check whether the old, somewhat badly named option is there, if so, use the data and delete it.
+			$old_options = get_option( 'MinComLengthOptions' );
+			if ( is_array( $old_options ) ) {
+				$this->options = $old_options;
+				delete_option( 'MinComLengthOptions' );
+			} else {
+				// Set some defaults if no settings are set yet
+				$this->options['mincomlength'] 		= 15;
+				$this->options['mincomlengtherror'] = __("Error: Your comment is too short. Please try to say something useful.", $this->text_domain );
 			}
 			
-			$options = get_option('MinComLengthOptions');			
+			update_option( $this->option_name, $this->options );
+		}
+		
+		/**
+		 * Output the config page
+		 *
+		 * @since 0.1
+		 */
+		function config_page() {
+
+			// Since WP 3.2 outputs these errors by default, only display them when we're on versions older than 3.2 that do support the settings errors.
+			global $wp_version;
+			if ( version_compare( $wp_version, '3.2', '<' ) )
+				settings_errors();
+
+			// Show the content of the options array when debug is enabled
+			if ( WP_DEBUG )
+				echo '<pre>Options:<br/><br/>' . print_r( $this->options , 1 ) . '</pre>';
+
 			?>
 			<div class="wrap">
-				<h2>Minimum Comment Length options</h2>
-				<form action="" method="post" id="mincomlength-conf">
-					<?php
-					if ( function_exists('wp_nonce_field') )
-						wp_nonce_field('mincomlength-config');
-					?>
-					<table class="form-table" style="width: 100%;">
+				<h2><?php _e( 'Minimum Comment Length options', $this->text_domain ); ?></h2>
+				<form action="options.php" method="post">
+					<?php settings_fields( $this->option_name ); ?>
+					<table class="form-table">
 						<tr valign="top">
 							<th scrope="row">
-								<label for="mincomlength">Minimum comment length:</label>
+								<label for="mincomlength"><?php _e( 'Minimum comment length', $this->text_domain ); ?>:</label>
 							</th>
 							<td>
-								<input type="text" value="<?php echo $options['mincomlength']; ?>" name="mincomlength" id="mincomlength" size="4"/>
+								<input type="number" class="small-text" min="5" max="255" value="<?php echo $this->options['mincomlength']; ?>" name="<?php echo $this->option_name; ?>[mincomlength]" id="mincomlength" />
 							</td>
 						</tr>
 						<tr valign="top">
 							<th scrope="row">
-								<label for="mincomlengtherror">Error message:</label>
+								<label for="mincomlengtherror"><?php _e( 'Error message', $this->text_domain ); ?>:</label>
 							</th>
 							<td>
-								<input type="text" value="<?php echo $options['mincomlengtherror']; ?>" name="mincomlengtherror" id="mincomlengtherror" size="50"/>
+								<textarea rows="5" cols="50" name="<?php echo $this->option_name; ?>[mincomlengtherror]" id="mincomlengtherror"><?php echo esc_html( $this->options['mincomlengtherror'] ); ?></textarea>
 							</td>
 						</tr>
 
 					</table>
-					<p class="submit"><input type="submit" name="submit" value="Update Settings &raquo;" /></p>
+					<p class="submit"><input type="submit" class="button-primary" value="<?php esc_attr_e( 'Update Settings &raquo;', $this->text_domain ); ?>" /></p>
 				</form>
 			</div>
 <?php		}	
 	}
-}
-
-function check_comment_length($commentdata) {
-	$options = get_option('mincomlength');
-	if (!isset($options['mincomlength']) || $options['mincomlength'] == "" || !is_numeric($options['mincomlength']))
-		$options['mincomlength'] = 15;
-
-	if (!isset($options['mincomlengtherror']) || $options['mincomlengtherror'] == "")
-		$options['mincomlengtherror'] = "Error: Your comment is too short. Please try to say something useful.";
 	
-	if (current_user_can('edit_users')) {
-		return $commentdata;
-	}
-	if (strlen(trim($commentdata['comment_content'])) < $options['mincomlength']) {
-		wp_die( __($options['mincomlengtherror']) );
-	} else {
-		return $commentdata;
-	}
+	/**
+	 * Check the length of the comment and if it's too short: die.
+	 *
+	 * @since 0.1
+	 * @param array $commentdata all the data for the comment.
+	 * @return array $commentdata all the data for the comment (only returned when match was made).
+	 */
+	function check_comment_length($commentdata) {
+		// Bail early for power editors and admins.
+		if ( current_user_can('edit_posts') )
+			return $commentdata;
+
+		// Check for comment length and die if to short.
+		if ( strlen( trim( $commentdata['comment_content'] ) ) < $this->options['mincomlength'] ) {
+			wp_die( $this->options['mincomlengtherror'] );
+		} else {
+			return $commentdata;
+		}
+	}	
 }
 
-add_filter('preprocess_comment','check_comment_length');
-add_action('admin_menu', array('MinComLength_Admin','add_config_page'));
-?>
+$minimum_comment_length = new Minimum_Comment_Length();

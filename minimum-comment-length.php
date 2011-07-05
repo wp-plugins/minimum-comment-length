@@ -26,8 +26,18 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+/**
+ * Minimum comment length plugin. Check the comment for a set minimum length and disapprove it if it's too short.
+ * @package Minimum_Comment_Length
+ * @author Joost de Valk <joost@yoast.com>
+ * @copyright Copyright (C) 2008-2011, Joost de Valk
+ */
 if ( ! class_exists( 'Minimum_Comment_Length' ) ) {
 
+	/**
+	 * Class containing all the plugins functionality.
+	 * @package Minimum_Comment_Length
+	 */
 	class Minimum_Comment_Length {
 		
 		var $hook 			= 'min-comment-length';
@@ -104,7 +114,7 @@ if ( ! class_exists( 'Minimum_Comment_Length' ) ) {
 		/**
 		 * Register the config page for all users that have the manage_options capability
 		 *
-		 * @since 0.1
+		 * @since 0.5
 		 */
 		function add_config_page() {
 			add_options_page( __( 'Minimum comment length configuration', $this->text_domain ), __( 'Min comment length', $this->text_domain ), 'manage_options', $this->hook, array( &$this, 'config_page' ) );
@@ -113,7 +123,7 @@ if ( ! class_exists( 'Minimum_Comment_Length' ) ) {
 		/**
 		 * Register the settings link for the plugins page
 		 *
-		 * @since 0.1
+		 * @since 0.6
 		 */
 		function filter_plugin_actions( $links, $file ){
 			//Static so we don't call plugin_basename on every plugin row.
@@ -148,7 +158,7 @@ if ( ! class_exists( 'Minimum_Comment_Length' ) ) {
 		/**
 		 * Output the config page
 		 *
-		 * @since 0.1
+		 * @since 0.5
 		 */
 		function config_page() {
 
@@ -194,7 +204,7 @@ if ( ! class_exists( 'Minimum_Comment_Length' ) ) {
 	/**
 	 * Check the length of the comment and if it's too short: die.
 	 *
-	 * @since 0.1
+	 * @since 0.5
 	 * @param array $commentdata all the data for the comment.
 	 * @return array $commentdata all the data for the comment (only returned when match was made).
 	 */

@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Minimum Comment Length
+Plugin Name: Minimum comment length
 Version: 1.0
 Plugin URI: http://yoast.com/wordpress/minimum-comment-length/
 Description: Check the comment for a set minimum length and disapprove it if it's too short.
@@ -107,7 +107,7 @@ if ( ! class_exists( 'Minimum_Comment_Length' ) ) {
 		 * @since 0.1
 		 */
 		function add_config_page() {
-			add_options_page( __( 'Min Comment Length Configuration', $this->text_domain ), __( 'Min Comment Length', $this->text_domain ), 'manage_options', $this->hook, array( &$this, 'config_page' ) );
+			add_options_page( __( 'Minimum comment length configuration', $this->text_domain ), __( 'Min comment length', $this->text_domain ), 'manage_options', $this->hook, array( &$this, 'config_page' ) );
 		}
 
 		/**
@@ -163,7 +163,7 @@ if ( ! class_exists( 'Minimum_Comment_Length' ) ) {
 
 			?>
 			<div class="wrap">
-				<h2><?php _e( 'Minimum Comment Length options', $this->text_domain ); ?></h2>
+				<h2><?php _e( 'Minimum comment length configuration', $this->text_domain ); ?></h2>
 				<form action="options.php" method="post">
 					<?php settings_fields( $this->option_name ); ?>
 					<table class="form-table">

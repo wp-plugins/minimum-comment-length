@@ -1,0 +1,72 @@
+# Copyright (C) 2010 Minimum Comment Length
+# This file is distributed under the same license as the Minimum Comment Length package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Minimum Comment Length 1.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/minimum-comment-length\n"
+"POT-Creation-Date: 2011-07-05 20:52:18+00:00\n"
+"PO-Revision-Date: 2011-07-05 22:53+0100\n"
+"Last-Translator: Joost de Valk <joost@yoast.com>\n"
+"Language-Team: Yoast <joost@yoast.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Dutch\n"
+"X-Poedit-Country: NETHERLANDS\n"
+
+#: minimum-comment-length.php:98
+msgid "The minimum length you entered is invalid, please enter a minimum length above %d."
+msgstr "De minimale lengte die je hebt ingevuld is niet valide, vul een numerieke waarde in van minimaal %d."
+
+#: minimum-comment-length.php:110
+#: minimum-comment-length.php:166
+msgid "Minimum comment length configuration"
+msgstr "Minimale reactie lengte configuratie"
+
+#: minimum-comment-length.php:110
+msgid "Min comment length"
+msgstr "Minimale reactie lengte"
+
+#: minimum-comment-length.php:124
+msgid "Settings"
+msgstr "Instellingen"
+
+#: minimum-comment-length.php:142
+msgid "Error: Your comment is too short. Please try to say something useful."
+msgstr "Fout: je reactie is te kort. Geef ajb een meer zinvolle reactie."
+
+#. #-#-#-#-#  plugin.pot (Minimum comment length 1.0)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: minimum-comment-length.php:172
+msgid "Minimum comment length"
+msgstr "Minimale Reactie Lengte"
+
+#: minimum-comment-length.php:180
+msgid "Error message"
+msgstr "Fout melding"
+
+#: minimum-comment-length.php:188
+msgid "Update Settings &raquo;"
+msgstr "Instellingen Opslaan &raquo;"
+
+#. Plugin URI of the plugin/theme
+msgid "http://yoast.com/wordpress/minimum-comment-length/"
+msgstr "http://yoast.com/wordpress/minimum-comment-length/"
+
+#. Description of the plugin/theme
+msgid "Check the comment for a set minimum length and disapprove it if it's too short."
+msgstr "Checkt iedere reactie op een in te stellen minimum lengte en keurt deze af als hij te kort is."
+
+#. Author of the plugin/theme
+msgid "Joost de Valk"
+msgstr "Joost de Valk"
+
+#. Author URI of the plugin/theme
+msgid "http://yoast.com/"
+msgstr "http://yoast.com/"
+
+#~ msgid "Min Comment Length"
+#~ msgstr "Min Reactie Lengte"
+
+#~ msgid "Minimum Comment Length options"
+#~ msgstr "Minimale Reactie Lengte opties"

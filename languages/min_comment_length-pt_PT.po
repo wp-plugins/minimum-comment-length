@@ -1,0 +1,69 @@
+# Copyright (C) 2010 Minimum comment length
+# This file is distributed under the same license as the Minimum comment length package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Minimum comment length 1.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/minimum-comment-length\n"
+"POT-Creation-Date: 2011-07-05 20:52:18+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2011-07-06 12:47+0100\n"
+"Last-Translator: WordPress Portugal <http;//wp-portugal.com>\n"
+"Language-Team: Zé Fontainhas <jfontainhas@gmail.com>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Poedit-Language: Portuguese\n"
+"X-Poedit-Country: PORTUGAL\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: minimum-comment-length.php:98
+msgid "The minimum length you entered is invalid, please enter a minimum length above %d."
+msgstr "O comprimento mínimo que indicou é inválido. Por favor indique um valor maior do que %d."
+
+#: minimum-comment-length.php:110
+#: minimum-comment-length.php:166
+msgid "Minimum comment length configuration"
+msgstr "Configuração do comprimento mínimo de comentários"
+
+#: minimum-comment-length.php:110
+msgid "Min comment length"
+msgstr "Tamanho mín. do comentário"
+
+#: minimum-comment-length.php:124
+msgid "Settings"
+msgstr "Opções"
+
+#: minimum-comment-length.php:142
+msgid "Error: Your comment is too short. Please try to say something useful."
+msgstr "Erro: o seu comentário é muito curto. Por favor tente responder algo de útil."
+
+#. #-#-#-#-#  plugin.pot (Minimum comment length 1.0)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: minimum-comment-length.php:172
+msgid "Minimum comment length"
+msgstr "Tamanho mínimo do comentário"
+
+#: minimum-comment-length.php:180
+msgid "Error message"
+msgstr "Mensagem de erro"
+
+#: minimum-comment-length.php:188
+msgid "Update Settings &raquo;"
+msgstr "Actualizar opções &raquo;"
+
+#. Plugin URI of the plugin/theme
+msgid "http://yoast.com/wordpress/minimum-comment-length/"
+msgstr "http://yoast.com/wordpress/minimum-comment-length/"
+
+#. Description of the plugin/theme
+msgid "Check the comment for a set minimum length and disapprove it if it's too short."
+msgstr "Verifica que os comentários tem um comprimento mínimo e não os aprova se forem demasiado curtos."
+
+#. Author of the plugin/theme
+msgid "Joost de Valk"
+msgstr "Joost de Valk"
+
+#. Author URI of the plugin/theme
+msgid "http://yoast.com/"
+msgstr "http://yoast.com/"
+

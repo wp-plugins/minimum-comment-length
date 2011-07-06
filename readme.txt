@@ -4,7 +4,7 @@ Donate link: http://yoast.com/donate/
 Tags: comment, comments, spam
 Requires at least: 2.8
 Tested up to: 3.2
-stable tag: 1.0
+stable tag: 1.0.1
 
 Check the comment for a set minimum length and disapprove it if it's too short. Make your commenters leave meaningful comments!
 
@@ -36,6 +36,11 @@ Optional:
 2. Example warning for comment that's too short.
 
 == Changelog ==
+
+= 1.0.1 =
+
+* Fixed major bug in comment length detection causing no comments to come through.
+* Added French and Portuguese translations.
 
 = 1.0 =
 

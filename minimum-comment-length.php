@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Minimum comment length
-Version: 1.0
+Version: 1.0.1
 Plugin URI: http://yoast.com/wordpress/minimum-comment-length/
 Description: Check the comment for a set minimum length and disapprove it if it's too short.
 Author: Joost de Valk
@@ -58,7 +58,7 @@ if ( ! class_exists( 'Minimum_Comment_Length' ) ) {
 				$this->set_defaults();
 
 			// Process the comment and check it for length
-			add_filter( 'preprocess_comment', 	array( &$this, 'check_comment_length' ) );
+			add_filter( 'preprocess_comment', 	array( &$this, 'check_comment_length' ), 10, 1 );
 			
 			if ( !is_admin() )
 				return;
@@ -199,27 +199,26 @@ if ( ! class_exists( 'Minimum_Comment_Length' ) ) {
 				</form>
 			</div>
 <?php		}	
-	}
 	
-	/**
-	 * Check the length of the comment and if it's too short: die.
-	 *
-	 * @since 0.5
-	 * @param array $commentdata all the data for the comment.
-	 * @return array $commentdata all the data for the comment (only returned when match was made).
-	 */
-	function check_comment_length($commentdata) {
-		// Bail early for power editors and admins.
-		if ( current_user_can('edit_posts') )
-			return $commentdata;
+		/**
+		 * Check the length of the comment and if it's too short: die.
+		 *
+		 * @since 0.5
+		 * @param array $commentdata all the data for the comment.
+		 * @return array $commentdata all the data for the comment (only returned when match was made).
+		 */
+		function check_comment_length( $commentdata ) {
+			// Bail early for power editors and admins.
+			if ( current_user_can('edit_posts') )
+				return $commentdata;
 
-		// Check for comment length and die if to short.
-		if ( strlen( trim( $commentdata['comment_content'] ) ) < $this->options['mincomlength'] ) {
-			wp_die( $this->options['mincomlengtherror'] );
-		} else {
+			// Check for comment length and die if to short.
+			if ( strlen( trim( $commentdata['comment_content'] ) ) < $this->options['mincomlength'] ) 
+				wp_die( $this->options['mincomlengtherror'] );
+
 			return $commentdata;
-		}
-	}	
+		}	
+	}
 }
 
 $minimum_comment_length = new Minimum_Comment_Length();

@@ -1,6 +1,5 @@
 === Minimum Comment Length ===
 Contributors: joostdevalk
-Donate link: http://yoast.com/donate/
 Tags: comment, comments, spam
 Requires at least: 3.5
 Tested up to: 4.0
@@ -15,8 +14,8 @@ Don't you find it annoying when someone comments with just a smiley? Or a "thank
 
 More info:
 
-* [Minimum Comment Length](http://yoast.com/wordpress/minimum-comment-length/).
-* Check out the other [Wordpress plugins](http://yoast.com/wordpress/) by the same author.
+* [Minimum Comment Length](https://yoast.com/wordpress/plugins/minimum-comment-length/).
+* Check out the other [Wordpress plugins](https://yoast.com/wordpress/plugins/) by the same authors.
 
 == Installation ==
 
@@ -38,42 +37,12 @@ Optional:
 
 == Changelog ==
 
-<<<<<<< Local Changes
-<<<<<<< Local Changes
-<<<<<<< Local Changes
-<<<<<<< Local Changes
-= 1.0.2 =
-
-* Added Turkish and Chinese.
-
-=======
-= 1.1 =
-
-*
-
->>>>>>> External Changes
-=======
-= 1.1 =
-
-* Added a ton of translations.
-* Updated the code slightly to be more in line with current core coding standards.
-
->>>>>>> External Changes
-=======
-= 1.1 =
-
-* Added a ton of translations, plugin now includes: Bosnian, Bulgarian, Chinese, Danish, Dutch, French (France), German, Greek, Hebrew, Indonesian, Italian, Malay, Persian, Polish, Portuguese (Brazil), Portuguese (Portugal), Russian, Spanish (Spain), Swedish, Turkish, Romanian.
-* Updated the code slightly to be more in line with current core coding standards.
-
->>>>>>> External Changes
-=======
 = 1.1 =
 
 * Added a ton of translations, plugin now includes: Bosnian, Bulgarian, Chinese, Danish, Dutch, French (France), German, Greek, Hebrew, Indonesian, Italian, Malay, Persian, Polish, Portuguese (Brazil), Portuguese (Portugal), Russian, Spanish (Spain), Swedish, Turkish, Romanian.
 * Updated the code slightly to be more in line with current core coding standards.
 * Moved screenshots to assets directory.
 
->>>>>>> External Changes
 = 1.0.1 =
 
 * Fixed major bug in comment length detection causing no comments to come through.

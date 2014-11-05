@@ -2,9 +2,9 @@
 Contributors: joostdevalk
 Donate link: http://yoast.com/donate/
 Tags: comment, comments, spam
-Requires at least: 2.8
-Tested up to: 3.2
-stable tag: 1.0.1
+Requires at least: 3.5
+Tested up to: 4.0
+stable tag: 1.1
 
 Check the comment for a set minimum length and disapprove it if it's too short. Make your commenters leave meaningful comments!
 
@@ -30,12 +30,18 @@ Optional:
 * An options panel will appear under Options.
 * Decide on which comment length you'd like to block and what error to throw when a comment is too short.
 
-== Screenshot ==
+== Screenshots ==
 
 1. Screenshot of the admin panel.
 2. Example warning for comment that's too short.
 
 == Changelog ==
+
+= 1.1 =
+
+* Added a ton of translations, plugin now includes: Bosnian, Bulgarian, Chinese, Danish, Dutch, French (France), German, Greek, Hebrew, Indonesian, Italian, Malay, Persian, Polish, Portuguese (Brazil), Portuguese (Portugal), Russian, Spanish (Spain), Swedish, Turkish, Romanian.
+* Updated the code slightly to be more in line with current core coding standards.
+* Moved screenshots to assets directory.
 
 = 1.0.1 =
 

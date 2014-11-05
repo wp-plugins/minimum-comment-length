@@ -4,7 +4,8 @@ Donate link: http://yoast.com/donate/
 Tags: comment, comments, spam
 Requires at least: 3.5
 Tested up to: 4.0
-stable tag: 1.1
+Stable tag: 1.1
+License: GPLv3
 
 Check the comment for a set minimum length and disapprove it if it's too short. Make your commenters leave meaningful comments!
 
@@ -37,12 +38,42 @@ Optional:
 
 == Changelog ==
 
+<<<<<<< Local Changes
+<<<<<<< Local Changes
+<<<<<<< Local Changes
+<<<<<<< Local Changes
+= 1.0.2 =
+
+* Added Turkish and Chinese.
+
+=======
+= 1.1 =
+
+*
+
+>>>>>>> External Changes
+=======
+= 1.1 =
+
+* Added a ton of translations.
+* Updated the code slightly to be more in line with current core coding standards.
+
+>>>>>>> External Changes
+=======
+= 1.1 =
+
+* Added a ton of translations, plugin now includes: Bosnian, Bulgarian, Chinese, Danish, Dutch, French (France), German, Greek, Hebrew, Indonesian, Italian, Malay, Persian, Polish, Portuguese (Brazil), Portuguese (Portugal), Russian, Spanish (Spain), Swedish, Turkish, Romanian.
+* Updated the code slightly to be more in line with current core coding standards.
+
+>>>>>>> External Changes
+=======
 = 1.1 =
 
 * Added a ton of translations, plugin now includes: Bosnian, Bulgarian, Chinese, Danish, Dutch, French (France), German, Greek, Hebrew, Indonesian, Italian, Malay, Persian, Polish, Portuguese (Brazil), Portuguese (Portugal), Russian, Spanish (Spain), Swedish, Turkish, Romanian.
 * Updated the code slightly to be more in line with current core coding standards.
 * Moved screenshots to assets directory.
 
+>>>>>>> External Changes
 = 1.0.1 =
 
 * Fixed major bug in comment length detection causing no comments to come through.
